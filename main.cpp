@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 #include <vecmath.h>
 #include "camera.h"
 

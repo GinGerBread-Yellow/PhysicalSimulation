@@ -1,7 +1,7 @@
 #include "camera.h"
 
 #include <iostream>
-#include <GL/glu.h>
+#include <OpenGL/glu.h>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979f

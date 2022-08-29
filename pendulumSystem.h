@@ -3,7 +3,7 @@
 
 #include <vecmath.h>
 #include <vector>
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 
 #include "particleSystem.h"
 

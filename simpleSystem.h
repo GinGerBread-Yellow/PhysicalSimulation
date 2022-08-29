@@ -1,7 +1,7 @@
 #ifndef SIMPLESYSTEM_H
 #define SIMPLESYSTEM_H
 
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 #include <vecmath.h>
 #include <vector>
 
