@@ -46,22 +46,22 @@ namespace
         timeStepper = new RK4();
     }
 
+    const float defaultStep = 0.02f; // 0.04f
+    h = defaultStep;
     if(argv[2] != NULL) {
         char *err = 0;
         float stepSize = std::strtod(argv[2], &err);
         if(*err != '\0' || stepSize <= 0.f) {
             cerr << "Error step size: " << argv[2] << '\n';
-            h = 0.04f;
         } else {
             cerr << "Step size: " << stepSize << '\n';
             h = stepSize;
         }
-    } else {
-        h = 0.04f;
     }
     
     // system = new SimpleSystem();
-    system = new PendulumSystem(4);
+    // system = new PendulumSystem(4);
+    system = new ClothSystem();
     		
   }
 

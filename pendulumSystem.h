@@ -32,7 +32,7 @@ public:
 
 	class SpringEdge {
 	public:
-		SpringEdge(int _vertice, int _restLength, float _k):
+		SpringEdge(int _vertice, float _restLength, float _k):
 			nei(_vertice), restLength(_restLength), k(_k) {}
 		int nei;
 		float restLength;
