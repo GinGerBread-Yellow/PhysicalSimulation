@@ -12,6 +12,8 @@
 
 #include "TimeStepper.hpp"
 #include "simpleSystem.h"
+#include "pendulumSystem.h"
+#include "ClothSystem.h"
 
 using namespace std;
 
@@ -21,6 +23,7 @@ namespace
 
     ParticleSystem *system;
     TimeStepper * timeStepper;
+    float h;
 
   // initialize your particle systems
   ///TODO: read argv here. set timestepper , step size etc
@@ -28,8 +31,38 @@ namespace
   {
     // seed the random number generator with the current time
     srand( time( NULL ) );
-    system = new SimpleSystem();
-    timeStepper = new RK4();		
+    cerr << "argv1 " << argv[1] << '\n';
+    if(strcmp(argv[1],"e")==0) {
+        cerr << "Integrator: ForwardEuler\n";
+        timeStepper = new ForwardEuler();
+    } else if (strcmp(argv[1],"t")==0) {
+        cerr << "Integrator: Trapzoidal\n";
+        timeStepper = new Trapzoidal();
+    } else if (strcmp(argv[1],"r")==0) {
+        cerr << "Integrator: Runge-Kutta\n";
+        timeStepper = new RK4();
+    } else {
+        cerr << "Use RK4 by default\n";
+        timeStepper = new RK4();
+    }
+
+    if(argv[2] != NULL) {
+        char *err = 0;
+        float stepSize = std::strtod(argv[2], &err);
+        if(*err != '\0' || stepSize <= 0.f) {
+            cerr << "Error step size: " << argv[2] << '\n';
+            h = 0.04f;
+        } else {
+            cerr << "Step size: " << stepSize << '\n';
+            h = stepSize;
+        }
+    } else {
+        h = 0.04f;
+    }
+    
+    // system = new SimpleSystem();
+    system = new PendulumSystem(4);
+    		
   }
 
   // Take a step forward for the particle shower
@@ -38,7 +71,7 @@ namespace
   void stepSystem()
   {
       ///TODO The stepsize should change according to commandline arguments
-    const float h = 0.04f;
+    // const float h = 0.04f;
     if(timeStepper!=0){
       timeStepper->takeStep(system,h);
     }
