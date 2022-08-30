@@ -104,6 +104,14 @@ vector<Vector3f> ClothSystem::evalF(vector<Vector3f> state)
 		f[edge.p1+1] -= acc_0; // p1.v
 	}
 
+	if(flags & CLOTH_WIND_ON) {
+
+		for (int i = 0; i < m_numParticles; i++) {
+			float rnd = (float)rand()/RAND_MAX;
+			f[2*i+1] += rnd * Vector3f(0.f, 0.f, 4.f);
+		}
+	}
+
 	// first point constraint
 	int i1 = indexOf(0, 0), i2 = indexOf(0, ncols-1);
 
@@ -128,6 +136,37 @@ vector<Vector3f> ClothSystem::evalF(vector<Vector3f> state)
 void ClothSystem::draw()
 {
 	/**
+	 * draw different graph 
+	*/
+
+	if(flags & CLOTH_JOINT_ON) {
+		drawJoints();
+	}
+
+	if(flags & CLOTH_WIREFRAME_ON) {
+		drawWireframes();
+	} else {
+		drawMeshes();
+	}
+ 
+	
+}
+
+void ClothSystem::drawWireframes() {
+	glLineWidth(2.0f);
+	glColor4f(0.5f, 0.5f, 0.5f, 1);
+	glBegin(GL_LINES);
+	for (int i = 0; i < springs.size(); i++) {
+		if(springs[i].restLength != CLOTH_GRID_LEN) continue;
+		Vector3f p0 = m_vVecState[springs[i].p0], p1 = m_vVecState[springs[i].p1];
+		glVertex3f(p0.x(), p0.y(), p0.z());
+		glVertex3f(p1.x(), p1.y(), p1.z());
+	}
+	
+	glEnd();
+}
+
+void ClothSystem::drawJoints() {
 	// check for node
 	for (int i = 0; i < (m_numParticles<<1); i+=2) {
 		Vector3f &pos = m_vVecState[i];//  position of particle i. YOUR CODE HERE
@@ -137,8 +176,9 @@ void ClothSystem::draw()
 		glutSolidSphere(0.075f,10.0f,10.0f);
 		glPopMatrix();
 	}
-	*/
+}
 
+void ClothSystem::drawMeshes() {
 	// write mesh
 	glBegin(GL_TRIANGLES);
 	for (int i = 0; i < nrows - 1; ++i) {
@@ -169,4 +209,3 @@ void ClothSystem::draw()
 	}
 	glEnd();
 }
-

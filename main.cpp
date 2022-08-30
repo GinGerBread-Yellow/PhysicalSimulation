@@ -137,6 +137,24 @@ namespace
             camera.SetCenter( Vector3f::ZERO );
             break;
         }
+        case 'w':
+        {
+            cerr << "wireframe\n";
+            system->setFlags(CLOTH_WIREFRAME_ON);
+            break;
+        }
+        case 'd':
+        {
+            cerr << "wind\n";
+            system->setFlags(CLOTH_WIND_ON);
+            break;
+        }
+        case 'j':
+        {
+            cerr << "joint\n";
+            system->setFlags(CLOTH_JOINT_ON);
+            break;
+        }
         default:
             cout << "Unhandled key press " << key << "." << endl;        
         }

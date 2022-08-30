@@ -6,6 +6,10 @@
 #include <vector>
 #include <GLUT/glut.h>
 
+#define CLOTH_WIND_ON 				0x01
+#define CLOTH_WIREFRAME_ON 		0x02
+#define CLOTH_JOINT_ON				0x04
+
 
 #include "particleSystem.h"
 
@@ -41,6 +45,10 @@ private:
 	inline int indexOf(int i, int j) {
 		return (i*ncols + j)<<1;
 	}
+
+	void drawJoints();
+	void drawMeshes();
+	void drawWireframes();
 
 	vector< SpringEdge > springs;	
 

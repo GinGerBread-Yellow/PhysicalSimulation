@@ -24,10 +24,14 @@ public:
 	void setState(const vector<Vector3f>  & newState) { m_vVecState = newState; };
 	
 	virtual void draw() = 0;
+
+	void setFlags(int mode) { flags ^= mode; }; 
+	int getFlags() const { return flags; };
 	
 protected:
 
 	vector<Vector3f> m_vVecState;
+	int flags;
 	
 };
 
